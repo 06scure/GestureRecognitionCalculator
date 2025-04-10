@@ -3,12 +3,6 @@ from HandDetector import HandDetector
 from Calculator import Calculator
 
 
-def setup_camera(detector: HandDetector, width: int = 1280, height: int = 720) -> None:
-    """初始化摄像头分辨率"""
-    detector.cap.set(3, width)
-    detector.cap.set(4, height)
-
-
 def process_hand_input(calc: Calculator, hand_info: tuple) -> str:
     """
     处理手部输入并返回按钮值
@@ -41,7 +35,6 @@ def main():
     # 初始化模块
     detector = HandDetector()
     calc = Calculator()
-    setup_camera(detector)
 
     while True:
         # 读取摄像头帧

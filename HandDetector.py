@@ -18,6 +18,9 @@ class HandDetector:
                                         min_tracking_confidence)
         self.mpDraw = mp.solutions.drawing_utils
         self.cap = cv2.VideoCapture(0)  # 默认从摄像头读取
+        self.cap.set(3, 1920)
+        self.cap.set(4, 1080)
+
         self.hand_landmarks = []  # 存储每帧手部关键点列表
 
     def update(self):

@@ -78,7 +78,7 @@ class Calculator:
     def check_hand_input(self, palm_pos, hand_status):
         """
         根据掌心坐标和状态，判断是否点击了某个按钮。
-        启用防抖机制，处理表达式计算。
+        启用防抖机制，处理表达式计算，支持结果后自动清空。
         """
         if self.delay_counter > 0:
             self.delay_counter -= 1
@@ -91,16 +91,23 @@ class Calculator:
         for region in self.get_button_regions():
             if region['x1'] <= px <= region['x2'] and region['y1'] <= py <= region['y2']:
                 value = region['value']
+
+                # 如果已经是计算结果，下一次按键清空
+                if hasattr(self, 'calculated') and self.calculated:
+                    self.myEquation = ''
+                    self.calculated = False
+
                 if value == '=':
-                    # 计算表达式结果
                     try:
                         result = str(eval(self.myEquation))
                         self.myEquation = result
                     except:
                         self.myEquation = "Error"
+                    self.calculated = True  # 标记为“已计算”，等待清空
                 else:
                     self.myEquation += value
 
-                self.delay_counter = 10  # 设置防抖间隔，避免重复触发
+                self.delay_counter = 20
                 break
+
 
